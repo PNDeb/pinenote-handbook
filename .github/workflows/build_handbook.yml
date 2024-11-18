@@ -1,0 +1,101 @@
+name: Build handbook .deb packages and deploy to pages
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+
+jobs:
+  # build_debs:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
+
+  #   - name: Install dependencies
+  #     run: sudo apt -y update && sudo apt install build-essential devscripts debhelper-compat mkdocs mkdocs-material
+
+  #   - name: Build
+  #     run: ./build_all.sh
+
+  #   - name: Artifacts
+  #     uses: actions/upload-artifact@v3
+  #     with:
+  #       name: PineNote-Tweaks
+  #       path: release/*
+
+  build_debs:
+    runs-on: ubuntu-latest
+    name: Generate Debian package for the Pinenote-handbook
+    steps:
+      - name: Docker-based compilation
+        id: compile-mesa-in-docker
+        uses: PNDeb/pinenote-handbook@main
+      - name: Upload files
+        uses: actions/upload-artifact@v4
+        with:
+          name: pinenote-handbook-deb
+          path: ${{ runner.temp }}/_github_home/release
+      - name: Upload pages files
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/_github_home/handbook
+
+  # do_release:
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - build_debs
+  #   steps:
+  #     - name: Clone workflow repository
+  #       uses: actions/checkout@v3
+  #     - name: Download image artifacts
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         path: artifacts/
+  #     - name: Make release
+  #       uses: softprops/action-gh-release@v0.1.15
+  #       with:
+  #         draft: true
+  #         files: |
+  #           artifacts/PineNote-Tweaks/*
+  # Deploy job
+  deploy:
+    # Add a dependency to the build job
+    needs: build_debs
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 # or specific "vX.X.X" version tag for this action
+
+  do_release:
+    # if: startsWith(github.ref, 'refs/tags/')
+    # if: contains(github.ref, "main")
+    runs-on: ubuntu-latest
+    needs:
+      - build_debs
+    steps:
+      - name: Clone workflow repository
+        uses: actions/checkout@v4
+      - name: Download image artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+      - name: Make release
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          draft: true
+          files: |
+            artifacts/pinenote-handbook-deb/*
