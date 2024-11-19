@@ -31,7 +31,7 @@ Wiki](https://wiki.pine64.org/wiki/Main_Page#Community_and_Support).
 * User/Password: You are logged in as user "user" with password "1234". sudo is
   activated. We suggest to set a root password:
 
-    ```
+    ```sh
     sudo su - root
     passwd
     ```
@@ -41,9 +41,9 @@ Wiki](https://wiki.pine64.org/wiki/Main_Page#Community_and_Support).
 
 * You may want (should!) to reconfigure your locales:
 
-	```
-	sudo dpkg-reconfigure locales
- 	```
+    ```sh
+    sudo dpkg-reconfigure locales
+    ```
 
   GNOME localisation can be changed in the settings.
 
@@ -103,8 +103,8 @@ Four items are added to the GNOME interface:
 
 Apart from a number of tweaks aimed at producing an improved user experience on
 the PineNote, and a few patched packages, you are running a Debian Trixie
-Operating System which can be maintained as every other system. Use `apt` or
-`aptitude` to manage you packages. `gnome-software` is also installed and
+Operating System which can be maintained as every other system. Use ``apt`` or
+``aptitude`` to manage you packages. ``gnome-software`` is also installed and
 should prompt you within GNOME in regular intervals if software updates are
 available.
 
@@ -139,18 +139,20 @@ information.
 
 ## Using another partition for /home
 
-Depending on the method of installation, /home is located on the root
+Depending on the method of installation, ``/home`` is located on the root
 partition, which is quite small in size (check by analysing the output of the
 *mount* command).
 However, a bash script is
-provided in `/root/switch_home_to_other_partition.sh` which can be used to
-change the partition that is used for /home. The script can also transfer data
-from the current /home to the new partition. Call as root.
+provided in ``/root/switch_home_to_other_partition.sh`` which can be used to
+change the partition that is used for ``/home``. The script can also transfer data
+from the current ``/home`` to the new partition. Call as root.
 
-Example to switch /home to /dev/mmcblk0p7:
+Example to switch ``/home`` to ``/dev/mmcblk0p7``:
 
-	cd /root
-	switch_home_to_other_partition.sh /dev/mmcblk0p7
+```sh
+cd /root
+switch_home_to_other_partition.sh /dev/mmcblk0p7
+```
 
 ## Switching the default boot partitions
 
@@ -158,12 +160,16 @@ You need shell root access, either via ssh, or via the UART dongle
 
 * mount the uboot_env partition:
 
-			mount /uboot_env
+    ```sh
+    mount /uboot_env
+    ```
 
 * use the provided shell script to change the boot order:
 
-			cd /root
-			./uboot_change_bootmenu.sh
+    ```sh
+    cd /root
+    ./uboot_change_bootmenu.sh
+    ```
 
 ## Documentation for apps/systems
 
@@ -202,16 +208,20 @@ The PineNote Pen interfaces with the PineNote using two interfaces:
 The hardware contains non-volatile storage for the MAC address - it could be
 that the pen just works. Otherwise, as root, connect manually:
 
-	echo 1 > /sys/bus/spi/devices/spi4.0/scan; # scanning takes ca. 12 seconds
-											 # press the buttons during scanning
-    # print MAC address pen
-	cat /sys/bus/spi/devices/spi4.0/scan
-	echo [MAC] > /sys/bus/spi/devices/spi4.0/pen_address
+```sh
+echo 1 > /sys/bus/spi/devices/spi4.0/scan; # scanning takes ca. 12 seconds
+                                         # press the buttons during scanning
+# print MAC address pen
+cat /sys/bus/spi/devices/spi4.0/scan
+echo [MAC] > /sys/bus/spi/devices/spi4.0/pen_address
+```
 
 Afterwards, check that the pen is working by checking the pen attributes:
 
-	cat /sys/bus/spi/devices/spi4.0/pen_version
-	cat /sys/bus/spi/devices/spi4.0/pen_battery
+```sh
+cat /sys/bus/spi/devices/spi4.0/pen_version
+cat /sys/bus/spi/devices/spi4.0/pen_battery
+```
 
 ### EBC Kernel Driver
 
@@ -231,15 +241,17 @@ which require most tweaking for each user.
 ### Usage
 
 All module parameters are controlled using the sysfs parameters in
-/sys/module/rockchip_ebc/parameters
+``/sys/module/rockchip_ebc/parameters``
 
 The module parameters can also be set on module load time, for example using
 the modprobe configuration file:
 
-	root@pinenote:~# cat /etc/modprobe.d/rockchip_ebc.conf
-	options rockchip_ebc direct_mode=0 auto_refresh=1 split_area_limit=0 panel_reflection=1
+```sh
+root@pinenote:~# cat /etc/modprobe.d/rockchip_ebc.conf
+options rockchip_ebc direct_mode=0 auto_refresh=1 split_area_limit=0 panel_reflection=1
+```
 
-By default the parameters in /sys/module/rockchip_ebc/parameters need to be
+By default the parameters in ``/sys/module/rockchip_ebc/parameters`` need to be
 writen to as root, but this can be easily changed via udev rules.
 
 ### Debugging
@@ -249,22 +261,24 @@ feature)[https://www.kernel.org/doc/html/latest/admin-guide/dynamic-debug-howto.
 of the linux kernel.
 
 As root, the following commands should get you going. Note that the line
-numbers can change between kernel releases! Check the output of `cat control |
-grep rockchip_ebc`
+numbers can change between kernel releases! Check the output of ``cat control |
+grep rockchip_ebc``
 
-	cd /sys/kernel/debug/dynamic_debug/
-	# lists all debug outputs available for the module
-	cat control  | grep rockchip_ebc
-	# now we can activate/disable individual debug statements
-	echo -n 'file drivers/gpu/drm/rockchip/rockchip_ebc.c line 1289 +p' > control
-	# list currently active (=p) debug statements
-	cat control  | grep rockchip_ebc | grep " =p "
+```sh
+cd /sys/kernel/debug/dynamic_debug/
+# lists all debug outputs available for the module
+cat control  | grep rockchip_ebc
+# now we can activate/disable individual debug statements
+echo -n 'file drivers/gpu/drm/rockchip/rockchip_ebc.c line 1289 +p' > control
+# list currently active (=p) debug statements
+cat control  | grep rockchip_ebc | grep " =p "
+```
 
 
 ### Overview of module/sysfs-parameters:
 
 * TODO
-* **split_area_limit** split_area_limit denotes the number of splits that the
+* ``split_area_limit`` denotes the number of splits that the
   driver is allowed to apply to individual clips. The idea is: when you submit
   two damage regions for drawing, and both regions overlap, and the first one
   already started, then it sometimes makes sense to split the second area into
@@ -280,11 +294,15 @@ In addition, two custom ioctls are currently implemented for the ebc driver:
 
 Activate with
 
-	echo 1 > /sys/module/rockchip_ebc/parameters/bw_mode
+```sh
+echo 1 > /sys/module/rockchip_ebc/parameters/bw_mode
+```
 
 the threshold value can be set using:
 
-	echo 7 > /sys/module/rockchip_ebc/parameters/bw_threshold
+```sh
+echo 7 > /sys/module/rockchip_ebc/parameters/bw_threshold
+```
 
 7 is the default value, meaning that all pixel values lower than 7 will be cast
 to 0 (black) and all values larger than, or equal to, 7 will be cast to 15
@@ -294,12 +312,16 @@ to 0 (black) and all values larger than, or equal to, 7 will be cast to 15
 
 Enabling automatic global (full screen) refreshes:
 
-	echo 1 > /sys/module/rockchip_ebc/parameters/auto_refresh
+```sh
+echo 1 > /sys/module/rockchip_ebc/parameters/auto_refresh
+```
 
 Global refreshes are triggered based on the area drawing using partial
 refreshes, in units of total screen area.
 
-	echo 2 > /sys/module/rockchip_ebc/parameters/refresh_threshold
+```sh
+echo 2 > /sys/module/rockchip_ebc/parameters/refresh_threshold
+```
 
 therefore will trigger a globlal refresh whenever 2 screen areas where drawn.
 
@@ -310,14 +332,16 @@ Other require lower numbers.
 
 The waveform to use for global refreshes can be set via
 
-	echo 4 > /sys/module/rockchip_ebc/parameters/refresh_waveform
+```sh
+echo 4 > /sys/module/rockchip_ebc/parameters/refresh_waveform
+```
 
 A value of 4 is the default.
 
 ### Waveforms
 
-* the **default_waveform** parameter controls which waveform is used. Based on
-  information from include/drm/drm_epd_helper.h, the integer values are
+* the ``default_waveform`` parameter controls which waveform is used. Based on
+  information from ``include/drm/drm_epd_helper.h``, the integer values are
   associated with the following waveforms:
 
 		0: @DRM_EPD_WF_RESET: Used to initialize the panel, ends with white
@@ -330,7 +354,7 @@ A value of 4 is the default.
 		7: @DRM_EPD_WF_GLR16: Less flashy 16-level grayscale, plus anti-ghosting
 		8: @DRM_EPD_WF_GLD16: Less flashy 16-level grayscale, plus anti-ghosting
 
-* (side note): Based on information from drivers/gpu/drm/drm_epd_helper.c, the
+* (side note): Based on information from ``drivers/gpu/drm/drm_epd_helper.c``, the
   PineNote uses eps lut form 0x19, which associates waveform types with the
   luts stored in the file as:
 
@@ -353,7 +377,7 @@ A value of 4 is the default.
 
   For example, if you want to inspect/modify the A2 waveform, this corresponds
   to the 7th waveform in the lut file (index 6), but is activated via
-  **default_waveform** by writing value 1.
+  ``default_waveform`` by writing value 1.
 
 ### Trimming the A2 waveform
 
@@ -366,14 +390,16 @@ automatically (run time on PineNote ca. 20 minutes).
 Call these command in a root shell to trim the A2 waveform (note: this will
 reboot the PineNote once):
 
-	cd /root
-	# this command should take ca. 20 minutes !!!
-    time python3 parse_waveforms_and_modify.py
-	# save the original waveforms for later use
-    mv /lib/firmware/rockchip/ebc.wbf /lib/firmware/rockchip/ebc_orig.wbf
-   	ln -s /lib/firmware/rockchip/ebc_modified.wbf /lib/firmware/rockchip/ebc.wbf
-	update-initramfs -u -k all
-	reboot
+```sh
+cd /root
+# this command should take ca. 20 minutes !!!
+time python3 parse_waveforms_and_modify.py
+# save the original waveforms for later use
+mv /lib/firmware/rockchip/ebc.wbf /lib/firmware/rockchip/ebc_orig.wbf
+ln -s /lib/firmware/rockchip/ebc_modified.wbf /lib/firmware/rockchip/ebc.wbf
+update-initramfs -u -k all
+reboot
+```
 
 ### Xournalpp/Writing
 
