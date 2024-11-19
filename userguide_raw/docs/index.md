@@ -14,7 +14,7 @@ document before proceeding to use your PineNote.
 
 If you want to improve this text, merge requests are very very much appreciated!
 
-[Improve on github](https://github.com/PNDeb/pinenote-tweaks/tree/main/pn_handbook)
+[Improve on GitHub](https://github.com/PNDeb/pinenote-handbook)
 
 ## Where to get help
 
@@ -256,8 +256,8 @@ writen to as root, but this can be easily changed via udev rules.
 
 ### Debugging
 
-Newer versions of the kernel driver use the (dynamic debug
-feature)[https://www.kernel.org/doc/html/latest/admin-guide/dynamic-debug-howto.html]
+Newer versions of the kernel driver use the [dynamic debug
+feature](https://www.kernel.org/doc/html/latest/admin-guide/dynamic-debug-howto.html)
 of the linux kernel.
 
 As root, the following commands should get you going. Note that the line
