@@ -32,7 +32,7 @@ Traditionally, technical, as well as user-focussed, information can be found in
 the [Pine wiki](https://wiki.pine64.org/wiki/Main_Page).
 However, the PineNote comes with a separate user manual (this document you are
 reading right now), which resides in this GitHub
-[repository](https://github.com/PNDeb/pinenote-tweaks/tree/main/pn_handbook).
+[repository](https://github.com/PNDeb/pinenote-handbook).
 
 Issues and pull-requests are very welcome!
 
@@ -56,7 +56,7 @@ of the Linux kernel and U-Boot, preventing any kind of obsolescence in that rega
 
 If you want to help with these efforts or contribute in any way, please reach
 out in the #pinenote channel on one of the
-[community chat platfors](https://wiki.pine64.org/wiki/Main_Page#Chat_Platforms).
+[community chat platforms](https://wiki.pine64.org/wiki/Main_Page#Chat_Platforms).
 
 ## Custom Software
 
