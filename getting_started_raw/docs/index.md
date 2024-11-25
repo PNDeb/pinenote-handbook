@@ -61,7 +61,9 @@ that overwrites the VCOM voltage.
 You can read out the VCOM voltage by executing the following command in a
 shell (either in GNOME, using the UART console, or via ssh):
 
-	cat /sys/module/tps65185_regulator/drivers/i2c\:tps65185/3-0068/regulator/regulator.29/microvolts
+```sh
+cat /sys/module/tps65185_regulator/drivers/i2c\:tps65185/3-0068/regulator/regulator.29/microvolts
+```
 
 !!!info
 
@@ -94,7 +96,7 @@ quality.
 
 <!-- TODO -->
 As the current Operating System is Debian, the command line update tool is
-`apt` but also the GUI program "Software" can be used to pull updates.
+``apt`` but also the GUI program "Software" can be used to pull updates.
 Where possible the OS is kept as close to upstream Debian, so everything should
 feel about the same.
 
