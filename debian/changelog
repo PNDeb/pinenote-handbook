@@ -1,3 +1,11 @@
+pn-handbook (1.11) trixie; urgency=medium
+
+  * A few small additions/restructuring
+  * A note for using the PN with a new user
+  * A note regarding bluetooth offloading (thanks user hrdl)
+
+ -- Maximilian Weigand <mweigand@mweigand.net>  Mon, 25 Nov 2024 14:36:11 +0100
+
 pn-handbook (1.10) trixie; urgency=medium
 
   * Proof reading by Diederik de Haas
