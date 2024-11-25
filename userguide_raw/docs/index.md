@@ -109,7 +109,8 @@ should prompt you within GNOME in regular intervals if software updates are
 available.
 
 A PineNote package repository is configured by default in this installation.
-For manual configuration of the repository, please refer to [this part of the image
+For manual configuration of the repository, please refer to [this part of the
+image
 Readme](https://github.com/PNDeb/pinenote-debian-image/tree/dev#pinenote-specific-debian-repository).
 
 ## Drawing Performance is too slow
@@ -136,23 +137,6 @@ complicated:
 See also [this github
 issue](https://github.com/PNDeb/pinenote-debian-image/issues/81) for more
 information.
-
-## Using another partition for /home
-
-Depending on the method of installation, ``/home`` is located on the root
-partition, which is quite small in size (check by analysing the output of the
-*mount* command).
-However, a bash script is
-provided in ``/root/switch_home_to_other_partition.sh`` which can be used to
-change the partition that is used for ``/home``. The script can also transfer data
-from the current ``/home`` to the new partition. Call as root.
-
-Example to switch ``/home`` to ``/dev/mmcblk0p7``:
-
-```sh
-cd /root
-switch_home_to_other_partition.sh /dev/mmcblk0p7
-```
 
 ## Switching the default boot partitions
 
@@ -273,7 +257,6 @@ echo -n 'file drivers/gpu/drm/rockchip/rockchip_ebc.c line 1289 +p' > control
 # list currently active (=p) debug statements
 cat control  | grep rockchip_ebc | grep " =p "
 ```
-
 
 ### Overview of module/sysfs-parameters:
 
@@ -408,17 +391,62 @@ reboot
   interferes with some aspect of touch input handling, including touch cancel
   events
 
+# Bluetooth
+
+It was reported that, under certain conditions, it may be benefitial to disable
+offloading. E.g., WPA3 was reported to run that way.
+
+```
+# disabling offloading for the brcmfmac kernel module
+options brcmfmac feature_disable=0x82000
+```
+
 # Firmware Blobs
 
 To the best of our knowledge, the following non-open code is run as firmware on
 your PineNote:
 
-* rk43566 RAM timings/TF-A
+* rk3566 RAM timings/TF-A
 * Bluetooth/Wi-Fi firmware
 * Touchscreen firmware
 * Firmware on the second BLE chip, used to connect the Pen buttons of batch 1
 
 Ask the PineNote chat for more information.
+
+# Advanced usage of the Debian system
+
+## Using the GNOME environment with a non-default user
+
+If you want to use your PineNote with another user (the default is: **user**),
+then make sure to add the new user to the following groups:
+
+```sh
+dialout,sudo,audio,video,plugdev,users,bluetooth,render,input
+```
+
+This can be achieved, for example, using the following command (as root):
+
+```sh
+usermod -G dialout,sudo,audio,video,plugdev,users,bluetooth,render,input [USERNAME]
+```
+
+## Using another partition for /home
+
+Depending on the method of installation, ``/home`` is located on the root
+partition, which is quite small in size (check by analysing the output of the
+*mount* command).
+However, a bash script is
+provided in ``/root/switch_home_to_other_partition.sh`` which can be used to
+change the partition that is used for ``/home``. The script can also transfer data
+from the current ``/home`` to the new partition. Call as root.
+
+Example to switch ``/home`` to ``/dev/mmcblk0p7``:
+
+```sh
+cd /root
+switch_home_to_other_partition.sh /dev/mmcblk0p7
+```
+
 
 # Topics to cover here
 
