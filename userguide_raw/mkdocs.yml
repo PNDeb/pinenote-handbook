@@ -1,9 +1,13 @@
 site_name: Pinenote User Guide
 theme:
   name: material
+nav:
+  - index.md
+  - apps.md
 markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
   - toc:
       permalink: "#"
+      toc_depth: 2

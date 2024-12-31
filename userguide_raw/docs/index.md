@@ -104,9 +104,12 @@ Four items are added to the GNOME interface:
 Apart from a number of tweaks aimed at producing an improved user experience on
 the PineNote, and a few patched packages, you are running a Debian Trixie
 Operating System which can be maintained as every other system. Use ``apt`` or
-``aptitude`` to manage you packages. ``gnome-software`` is also installed and
-should prompt you within GNOME in regular intervals if software updates are
-available.
+``aptitude`` to manage you packages.
+
+* (stock firmware only - image generated after 29. Dec 2024 do NOT install
+  gnome-software anymore!) ``gnome-software`` is also installed and should
+  prompt you within GNOME in regular intervals if software updates are
+  available.
 
 A PineNote package repository is configured by default in this installation.
 For manual configuration of the repository, please refer to [this part of the
@@ -391,7 +394,7 @@ reboot
   interferes with some aspect of touch input handling, including touch cancel
   events
 
-# Bluetooth
+### Bluetooth
 
 It was reported that, under certain conditions, it may be benefitial to disable
 offloading. E.g., WPA3 was reported to run that way.
@@ -401,7 +404,7 @@ offloading. E.g., WPA3 was reported to run that way.
 options brcmfmac feature_disable=0x82000
 ```
 
-# Firmware Blobs
+### Firmware Blobs
 
 To the best of our knowledge, the following non-open code is run as firmware on
 your PineNote:
@@ -413,9 +416,9 @@ your PineNote:
 
 Ask the PineNote chat for more information.
 
-# Advanced usage of the Debian system
+## Advanced usage of the Debian system
 
-## Using the GNOME environment with a non-default user
+### Using the GNOME environment with a non-default user
 
 If you want to use your PineNote with another user (the default is: **user**),
 then make sure to add the new user to the following groups:
@@ -430,7 +433,7 @@ This can be achieved, for example, using the following command (as root):
 usermod -G dialout,sudo,audio,video,plugdev,users,bluetooth,render,input [USERNAME]
 ```
 
-## Using another partition for /home
+### Using another partition for /home
 
 Depending on the method of installation, ``/home`` is located on the root
 partition, which is quite small in size (check by analysing the output of the
@@ -446,9 +449,7 @@ Example to switch ``/home`` to ``/dev/mmcblk0p7``:
 cd /root
 switch_home_to_other_partition.sh /dev/mmcblk0p7
 ```
-
-
-# Topics to cover here
+### Topics to cover here
 
 * DBUS service
 
@@ -458,3 +459,49 @@ switch_home_to_other_partition.sh /dev/mmcblk0p7
 * The GNOME extension
 * BLE Pen (Batch 1 from 2022 only)
 * Resources
+
+## Troubleshooting
+
+### Flashing problems
+
+* The PineNote is VERY picky about usb-c cables. It's best to use the supplied
+  usb cable for flashing via rkdeveloptool. If flashes take very long or abort
+  prematurely, try different cables.
+
+### My PN is stuck at the boot loader boot screen
+
+* If available, use the UART dongle to check if the PN boots, but for some
+  reason did not initialize the screen. See
+  [The wiki page](https://wiki.pine64.org/wiki/PineNote_Development/UART#Stock_dongle) for
+  more information on PineNote UART dongles.
+
+### My PN does only show boot text (and maybe the boot logo)
+
+![uboot boot screen](img/logo_kernel.png)
+
+* This does mean that the underlying linux operating system is booting, but
+  there are issues with the graphical user interface.
+* If available, use the UART dongle to check if the PN boots, but for some
+  reason did not initialize the screen.
+* Try removing lightdm and reconfigure gdm3 (you need to use the gdm3 login
+  manager for successful login):
+
+  ```sh
+	sudo apt remove lightdm
+	sudo dpkg-reconfigure gdm3
+  ```
+
+### My PN does not show anything on boot
+
+* For various reasons, the PineNote can completely crash. This requires a hard
+  reset, which is accomplished by holding the red power button on the top of
+  the PN for ca. 13 seconds.
+  Afterwards, you should be able to power on the PN by a short (1-2 second)
+  press on the power button.
+* If still nothing happens, you need an UART dongle to check if there is output
+  on the serial port.
+  [The wiki page](https://wiki.pine64.org/wiki/PineNote_Development/UART#Stock_dongle) for
+  more information on PineNote UART dongles.
+* Get in contact in the chat - you may need to open up the PineNote and enter
+  maskrom mode by shorting two test points. For more information, see
+  (https://wiki.pine64.org/wiki/PineNote_Development/Flashing#Entering_Maskrom/Rockusb_mode).

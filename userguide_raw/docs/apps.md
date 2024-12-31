@@ -1,4 +1,5 @@
 # Apps
+
 This page is dedicated to the instructions for getting/configuring various apps
 to work nicely on the PineNote.
 
