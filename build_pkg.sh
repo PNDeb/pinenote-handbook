@@ -9,6 +9,6 @@ dpkg-buildpackage -us -uc
 test -d release && rm -r release
 mkdir release
 mv ../*.deb release/
-mv ../*.buildinfo *.changes release/
+mv ../*.buildinfo ../*.changes release/
 mv ../*.dsc release/
 mv ../*.tar.xz release/
