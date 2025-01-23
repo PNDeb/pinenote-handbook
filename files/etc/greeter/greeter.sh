@@ -1,6 +1,35 @@
 #!/usr/bin/env sh
 
-test -e $HOME/.config/pinenote/disable_greeter && exit
+# we keep track of the number of time the greeter was opened via auto-start
+count_file="$HOME/.config/pinenote/greeter_count"
+# we do not start the greeter if this file exists
+disable_file="$HOME/.config/pinenote/disable_greeter"
+
+#
+test -e "${count_file}" || echo 0 > "${count_file}"
+
+content=`cat "${count_file}"`
+
+echo "Content: ${content}"
+
+if test "$content" -eq 0; then
+	content=1;
+	test -e "${disable_file}" && rm "${disable_file}"
+	echo "${content}" > greeter_count
+elif test "${content}" -eq 1; then
+	content=2;
+	test -e "${disable_file}" && rm "${disable_file}"
+	echo "${content}" > greeter_count
+elif test "${content}" -eq 2; then
+	content=3;
+	test -e "${disable_file}" && rm "${disable_file}"
+	echo "${content}" > greeter_count
+else
+	echo "Greeter started enough times. Will not delete the disable file"
+fi
+
+# exit if the disable file exists
+test -e "${disable_file}" && exit
 
 # use gnome-help-based yelp to show the help page
 yelp /etc/greeter/html/index.html&
@@ -9,7 +38,7 @@ yelp /etc/greeter/html/index.html&
 test -d $HOME/.config/pinenote || mkdir $HOME/.config/pinenote
 
 # touching this file will prevent the help from being shown on next boot/login
-touch $HOME/.config/pinenote/disable_greeter
+touch "${disable_file}"
 
 # this file should lead the Pinenote GNOME extension to disable the overview
 disable_overview_file="$HOME/.config/pinenote/do_not_show_overview"
