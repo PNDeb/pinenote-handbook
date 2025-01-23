@@ -1,3 +1,11 @@
+pn-handbook (1.13) UNRELEASED; urgency=medium
+
+  * Minor structural tweaks
+  * The help pages are now shown on the three first boots automatically,
+    before autostart is disabled.
+
+ -- Maximilian Weigand <mweigand@mweigand.net>  Thu, 23 Jan 2025 09:51:30 +0100
+
 pn-handbook (1.12) trixie; urgency=medium
 
   * Bump version to fix some packaging issues
