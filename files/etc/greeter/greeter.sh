@@ -15,15 +15,15 @@ echo "Content: ${content}"
 if test "$content" -eq 0; then
 	content=1;
 	test -e "${disable_file}" && rm "${disable_file}"
-	echo "${content}" > greeter_count
+	echo "${content}" > "${count_file}"
 elif test "${content}" -eq 1; then
 	content=2;
 	test -e "${disable_file}" && rm "${disable_file}"
-	echo "${content}" > greeter_count
+	echo "${content}" > "${count_file}"
 elif test "${content}" -eq 2; then
 	content=3;
 	test -e "${disable_file}" && rm "${disable_file}"
-	echo "${content}" > greeter_count
+	echo "${content}" > "${count_file}"
 else
 	echo "Greeter started enough times. Will not delete the disable file"
 fi
