@@ -69,7 +69,17 @@ Wiki](https://wiki.pine64.org/wiki/Main_Page#Community_and_Support).
 * **Take notes**: Xournalpp is installed on the PineNote by default.
   See this meta-issue on github for more information and other programs to
   test: https://github.com/PNDeb/pinenote-debian-image/issues/81
-* Surf the internet using Firefox
+* Surf the internet using Firefox (pre-installed)
+* **synchronize files**
+	* (https://docs.syncthing.net)[SyncThing] is installed by default on the
+	  PineNote. You can start it by typing "sync" in the app finder box that
+	  can be found when opening the activity tab.
+	  Refer to the SyncThing documentation for automatic starting of SyncThing
+	  (we recommend the systemd-user method):
+	  (https://docs.syncthing.net/users/autostart.html#linux)[https://docs.syncthing.net/users/autostart.html#linux]
+	* rsync and ssh shall work
+	* There is an USB-MTP start/stop script callable from the gnome extension
+	  menu
 * **Use the PineNote as an external screen?**:
 	* (untested) The Weylus project could be of help: https://github.com/H-M-H/Weylus
 * **Use an external monitor with the PineNote?**: The PineNote is not wired to
