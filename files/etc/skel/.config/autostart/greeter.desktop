@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=PinenoteHelperAutostart
-Exec=/bin/dash /etc/greeter/greeter.sh
+Exec=/usr/bin/dash /etc/greeter/greeter.sh
 Icon=
 Comment=
 X-GNOME-Autostart-enabled=true
