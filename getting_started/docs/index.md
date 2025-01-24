@@ -147,7 +147,8 @@ black and white mode).
 
 ![gnome_extension](img/gnome_extension.png)
 
-* Use the "Grayscale" mode for high-quality, slow-changing content
+* Use the "Grayscale" mode for high-quality, slow-changing content. This mode
+  is sometimes also referred to as GC16, indicating the waveform that is used.
 * Use the "BW+Dither" mode for fast-changing, dithered black and white,
   content. Dithering refers to the representation of colors by using certain
   black & white pixel patterns. See the [corresponding Wikipedia
