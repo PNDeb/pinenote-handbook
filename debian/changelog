@@ -1,3 +1,10 @@
+pn-handbook (1.14) trixie; urgency=medium
+
+  * The helper pages should now also properly start without the GNOME overview
+    on the first 3 boots
+
+ -- Maximilian Weigand <mweigand@mweigand.net>  Sun, 26 Jan 2025 18:15:13 +0100
+
 pn-handbook (1.13) trixie; urgency=medium
 
   * Minor structural tweaks
