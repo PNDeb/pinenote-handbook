@@ -399,6 +399,11 @@ reboot
 
 ### Xournalpp/Writing
 
+* Xournalpp sometimes does not recognize touch gestures in the menu. This is a
+  known bug that, however, apparently is quite hard to fix. Therefore, it is
+  recommended to use the pen for menu navigation in Xournalpp. See also [this
+  emacs commit
+  message](https://github.com/emacs-mirror/emacs/commit/50c4feb13246f1f82efd761dd13d31d5474cffa0)
 * Switch to "BW+Dither" mode when working in Xournalpp
 * Kinetic scrolling needs to be disabled because GTK3's implementation
   interferes with some aspect of touch input handling, including touch cancel
